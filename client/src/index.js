@@ -7,8 +7,7 @@ import { AuthProvider } from "./context/auth";
 import { SearchProvider } from "./context/search";
 import { CartProvider } from "./context/cart";
 
-// react-bootstrap configration
-// import "../node_modules/react-bootstrap/dist/react-bootstrap";
+// bootstrap configration
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap";
 
