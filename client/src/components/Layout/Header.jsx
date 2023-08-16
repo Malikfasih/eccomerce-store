@@ -1,16 +1,20 @@
-import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
 import { useCart } from "../../context/cart";
 import { Badge } from "antd";
+import decode from "jwt-decode";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
   const categories = useCategory();
   const [cart] = useCart();
+  // const location = useLocation();
+  const navigate = useNavigate();
+  // const [tokenExpiry, setTokenExpiry] = useState(false);
 
   const handleLogout = () => {
     setAuth({
@@ -21,6 +25,24 @@ const Header = () => {
     localStorage.removeItem("auth");
     toast.success("Logout Successfully");
   };
+
+  const tokenExpiration = () => {
+    const token = auth?.token;
+
+    if (token) {
+      const decodedToken = decode(token);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        toast.error("Session expired!");
+        handleLogout();
+        navigate("/");
+      }
+    }
+  };
+
+  useEffect(() => {
+    tokenExpiration();
+  }, []);
 
   return (
     <>

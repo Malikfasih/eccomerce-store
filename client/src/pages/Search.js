@@ -18,7 +18,7 @@ const Search = () => {
             {searchValues?.results.map((product) => (
               <div className="card m-2" style={{ width: "18rem" }}>
                 <img
-                  src={`/product/product-photo/${product._id}`}
+                  src={`${process.env.REACT_APP_BASE_URL}/product/product-photo/${product._id}`}
                   className="card-img-top"
                   alt={product.name}
                 />

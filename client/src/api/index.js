@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: "http://localhost:8080",
+export const API = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 API.interceptors.request.use((req) => {
@@ -9,16 +9,16 @@ API.interceptors.request.use((req) => {
     req.headers.Authorization = `Bearer ${
       JSON.parse(localStorage.getItem("auth")).token
     }`;
-  } // token will start with 'Bearer'
+  }
 
   return req;
 });
 
 // authentication
-export const register = (formData) => API.post("user/register", formData);
-export const login = (formData) => API.post("user/login", formData);
+export const register = (formData) => API.post("/user/register", formData);
+export const login = (formData) => API.post("/user/login", formData);
 export const forgotPassword = (formData) =>
-  API.post("user/forgot-password", formData);
+  API.post("/user/forgot-password", formData);
 export const updateProfile = (userData) => API.put("/user/profile/", userData);
 
 // category

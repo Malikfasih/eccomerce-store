@@ -45,7 +45,7 @@ const ProductDetails = () => {
       <div className="row container product-details">
         <div className="col-md-6">
           <img
-            src={`/product/product-photo/${product._id}`}
+            src={`${process.env.REACT_APP_BASE_URL}/product/product-photo/${product._id}`}
             className="card-img-top"
             alt={product.name}
             height="500"

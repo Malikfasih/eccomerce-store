@@ -66,7 +66,6 @@ const EditProduct = () => {
   //update product function
   const handleUpdate = async (e) => {
     e.preventDefault();
-    console.log("event fired");
     try {
       const productData = new FormData();
       productData.append("name", name);
@@ -76,11 +75,7 @@ const EditProduct = () => {
       photo && productData.append("photo", photo);
       productData.append("category", category);
 
-      console.log(name, description, price);
-
-      console.log("update product -->", productData);
       const { data } = await updateProduct(id, productData);
-      console.log(data);
       if (data?.success) {
         toast.success("Product Updated Successfully");
         navigate("/dashboard/admin/products");
@@ -161,7 +156,7 @@ const EditProduct = () => {
                 ) : (
                   <div className="text-center">
                     <img
-                      src={`/product/product-photo/${id}`}
+                      src={`${process.env.REACT_APP_BASE_URL}/product/product-photo/${id}`}
                       alt="product_photo"
                       height={"200px"}
                       className="img img-responsive"

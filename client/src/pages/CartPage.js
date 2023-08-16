@@ -4,14 +4,12 @@ import { useCart } from "../context/cart";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 import DropIn from "braintree-web-drop-in-react";
-// import { AiFillWarning } from "react-icons/ai";
-
 import toast from "react-hot-toast";
 import "../styles/Cart.css";
 import { paymentToken, productPayment } from "../api/index";
 
 const CartPage = () => {
-  const [auth, setAuth] = useAuth();
+  const [auth] = useAuth();
   const [cart, setCart] = useCart();
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
@@ -65,7 +63,7 @@ const CartPage = () => {
     try {
       setLoading(true);
       const { nonce } = await instance.requestPaymentMethod();
-      const { data } = await productPayment({
+      await productPayment({
         nonce,
         cart,
       });
@@ -103,21 +101,22 @@ const CartPage = () => {
           <div className="row d-flex align-items-center flex-xl-row flex-column">
             <div className="col-md-7 p-0 m-0">
               {cart?.map((p) => (
-                <div className="row card" key={p._id}>
-                  <div className="col-md-4 col-sm-3 h-auto">
+                <div className="d-flex flex-sm-row card" key={p._id}>
+                  <div className="card-image">
                     <img
-                      src={`product/product-photo/${p._id}`}
+                      src={`${process.env.REACT_APP_BASE_URL}/product/product-photo/${p._id}`}
                       className="card-img-top"
                       alt={p.name}
-                      width="100%"
                     />
                   </div>
-                  <div className="col-md-4 col-sm-6 d-flex flex-column justify-content-center h-100">
-                    <p>{p.name}</p>
-                    <p>{p.description.substring(0, 30)}</p>
-                    <p>Price : {p.price}</p>
+                  <div className="card-description">
+                    <div>
+                      <p>{p.name}</p>
+                      <p>{p.description.substring(0, 30)}</p>
+                      <p>Price : {p.price}</p>
+                    </div>
                   </div>
-                  <div className="col-md-4 col-sm-3 cart-remove-btn">
+                  <div className="cart-remove-btn">
                     <button
                       className="btn btn-danger"
                       onClick={() => removeCartItem(p._id)}

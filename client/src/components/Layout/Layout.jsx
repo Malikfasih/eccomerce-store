@@ -14,13 +14,22 @@ const Layout = ({ children, description, keywords, author, title }) => {
         <meta name="author" content={author} />
         <title>{title}</title>
       </Helmet>
-      <Header />
+      <div className="d-flex flex-column justify-content-between align-content-between">
+        <div>
+          <Header />
+        </div>
 
-      <main style={{ minHeight: "70vh" }}>
-        <Toaster />
-        {children}
-      </main>
-      <Footer />
+        <div>
+          <main style={{ minHeight: "70vh" }}>
+            <Toaster />
+            {children}
+          </main>
+        </div>
+
+        <div>
+          <Footer />
+        </div>
+      </div>
     </>
   );
 };
